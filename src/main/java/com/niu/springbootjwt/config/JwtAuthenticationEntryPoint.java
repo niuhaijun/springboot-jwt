@@ -1,5 +1,7 @@
 package com.niu.springbootjwt.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.niu.springbootjwt.common.Result;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -28,21 +30,23 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
       AuthenticationException authException)
       throws IOException, ServletException {
 
-    log.info("无权访问，需要去认证");
+    log.info("无权访问，需要去认证, authException: {}", authException.getMessage());
 
-    {
-      // This is invoked when user tries to access a secured REST resource without
-      // supplying any credentials.
-      // We should just send a 401 Unauthorized response because there is no
-      // 'login page' to redirect to
-      // response.sendError(SC_UNAUTHORIZED, "Unauthorized");
-    }
+    // This is invoked when user tries to access a secured REST resource without
+    // supplying any credentials.
+    // We should just send a 401 Unauthorized response because there is no
+    // 'login page' to redirect to
 
     //返回json形式的错误信息
     response.setCharacterEncoding("UTF-8");
     response.setContentType("application/json");
-    response.getWriter()
-        .println("{\"code\":401,\"message\":\"小弟弟，你没有携带 token 或者 token 无效！\",\"data\":\"\"}");
+
+    Result<String> result = new Result<>();
+    result.setCode(HttpServletResponse.SC_UNAUTHORIZED);
+    result.setMessage("你没有携带 token 或者 token 无效！请尝试再次登录");
+    result.setData(null);
+
+    response.getWriter().println(new ObjectMapper().writeValueAsString(result));
     response.getWriter().flush();
   }
 }

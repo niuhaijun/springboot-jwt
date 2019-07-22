@@ -1,5 +1,7 @@
 package com.niu.springbootjwt.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.niu.springbootjwt.common.Result;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -24,12 +26,18 @@ public class JwtAccessDeniedHandler implements AccessDeniedHandler {
   public void handle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
       AccessDeniedException e) throws IOException, ServletException {
 
+    log.info("403 forbidden, exception: {}", e.getMessage());
+
     //返回json形式的错误信息
     httpServletResponse.setCharacterEncoding("UTF-8");
     httpServletResponse.setContentType("application/json");
 
-    httpServletResponse.getWriter()
-        .println("{\"code\":403,\"message\":\"你没有权限访问！\",\"data\":\"\"}");
+    Result<String> result = new Result<>();
+    result.setData(null);
+    result.setCode(403);
+    result.setMessage("你没有权限访问！,请去找管理员申请权限。");
+
+    httpServletResponse.getWriter().println(new ObjectMapper().writeValueAsString(result));
     httpServletResponse.getWriter().flush();
   }
 }
