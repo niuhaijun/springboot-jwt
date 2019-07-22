@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.niu.springbootjwt.common.Result;
 import com.niu.springbootjwt.security.JwtAuthenticationException;
 import com.niu.springbootjwt.security.JwtAuthenticationRequest;
-import com.niu.springbootjwt.security.JwtAuthenticationResponse;
 import com.niu.springbootjwt.security.JwtTokenUtil;
 import com.niu.springbootjwt.security.JwtUser;
 import java.util.HashMap;
@@ -14,7 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
@@ -85,7 +83,9 @@ public class AuthUserController {
    * 刷新并获取token接口
    */
   @GetMapping(value = "/refresh")
-  public ResponseEntity<?> refreshAndGetAuthenticationToken(HttpServletRequest request) {
+  public Result<String> refreshAndGetAuthenticationToken(HttpServletRequest request) {
+
+    log.info("刷新token!!!");
 
     String authToken = request.getHeader(tokenHeader);
     final String token = authToken.substring(7);
@@ -94,10 +94,16 @@ public class AuthUserController {
 
     if (jwtTokenUtil.canTokenBeRefreshed(token, user.getLastPasswordResetDate())) {
       String refreshedToken = jwtTokenUtil.refreshToken(token);
-      return ResponseEntity.ok(new JwtAuthenticationResponse(refreshedToken));
+
+      return new Result<>(refreshedToken);
     }
 
-    return ResponseEntity.badRequest().body(null);
+    Result<String> result = new Result<>();
+    result.setMessage("刷新token失败");
+    result.setData(null);
+    result.setCode(500);
+
+    return result;
   }
 
   /**

@@ -1,6 +1,7 @@
 package com.niu.springbootjwt.controller;
 
 import com.niu.springbootjwt.common.Result;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,10 +18,19 @@ public class MethodProtectedController {
    * So 'ADMIN' here is actually stored as 'ROLE_ADMIN' in database!
    **/
   @GetMapping("admin")
-//  @PreAuthorize("hasRole('ADMIN')")
-  public Result<String> getProtectedGreeting() {
+  public Result<String> adminAccess() {
 
-    Result<String> result = new Result<>("Greetings from admin protected method!");
+    Result<String> result = new Result<>("Greetings from 【admin】 protected method!");
+
+    return result;
+  }
+
+
+  @GetMapping("user")
+  @PreAuthorize("hasRole('USER')")
+  public Result<String> userAccess() {
+
+    Result<String> result = new Result<>("Greetings from 【user】 protected method!");
 
     return result;
   }

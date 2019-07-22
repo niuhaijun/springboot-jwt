@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -99,7 +101,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         // 配置请求的访问权限
         .authorizeRequests()
-        .antMatchers("/auth/**").permitAll()
         .antMatchers("/protected/admin").hasRole("ADMIN")
         .anyRequest().authenticated();
 
@@ -109,25 +110,25 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     // disable page caching
     httpSecurity
         .headers()
-        .frameOptions().sameOrigin()  // required to set for H2 else H2 Console will be blank.
+        .frameOptions()
+        .sameOrigin()  // required to set for H2 else H2 Console will be blank.
         .cacheControl();
   }
 
-//  /**
-//   * ignore certain requests.
-//   */
-//  @Override
-//  public void configure(WebSecurity web) throws Exception {
-//
-//    // JwtAuthorizationTokenFilter will ignore the below paths
-//    web
-//        .ignoring()
-//        .antMatchers(POST, "/auth/**").and()
-//
-//        // allow anonymous resource requests
-//        .ignoring()
-//        .antMatchers(GET, "/", "/*.html", "/favicon.ico", "/**/*.html", "/**/*.css", "/**/*.js",
-//            "/**").and();
-//  }
+  /**
+   * ignore certain requests.
+   */
+  @Override
+  public void configure(WebSecurity web) throws Exception {
+
+    // JwtAuthorizationTokenFilter will ignore the below paths
+    web
+        .ignoring()
+        .antMatchers(HttpMethod.POST, "/auth/**").and()
+
+        // allow anonymous resource requests
+        .ignoring()
+        .antMatchers(HttpMethod.GET, "/favicon.ico", "/**/*.html", "/**/*.css", "/**/*.js").and();
+  }
 
 }
