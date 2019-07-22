@@ -13,6 +13,7 @@ import com.niu.springbootjwt.model.UserExample;
 import com.niu.springbootjwt.security.JwtUserFactory;
 import java.util.List;
 import java.util.stream.Collectors;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -26,6 +27,7 @@ import org.springframework.util.CollectionUtils;
  * @Version 1.0
  */
 @Service
+@Slf4j
 public class JwtUserDetailsServiceImpl implements UserDetailsService {
 
   @Autowired
@@ -45,6 +47,7 @@ public class JwtUserDetailsServiceImpl implements UserDetailsService {
     userExample.createCriteria().andUsernameEqualTo(username);
     List<User> users = userMapper.selectByExample(userExample);
     if (CollectionUtils.isEmpty(users)) {
+      log.info("No user found with username: {}", username);
       throw new UsernameNotFoundException(
           String.format("No user found with username '%s'.", username));
     }
@@ -60,7 +63,6 @@ public class JwtUserDetailsServiceImpl implements UserDetailsService {
     AuthorityExample authorityExample = new AuthorityExample();
     authorityExample.createCriteria().andIdIn(authorityIds);
     List<Authority> authorities = authorityMapper.selectByExample(authorityExample);
-
 
     UserDto userDto = UserDto.builder()
         .id(user.getId())

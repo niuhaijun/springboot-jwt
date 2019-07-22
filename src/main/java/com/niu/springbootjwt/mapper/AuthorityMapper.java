@@ -7,31 +7,34 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 
 public interface AuthorityMapper {
-    int countByExample(AuthorityExample example);
 
-    int deleteByExample(AuthorityExample example);
+  int countByExample(AuthorityExample example);
 
-    int deleteByPrimaryKey(Integer id);
+  int deleteByExample(AuthorityExample example);
 
-    int insert(Authority record);
+  int deleteByPrimaryKey(Integer id);
 
-    int insertSelective(Authority record);
+  int insert(Authority record);
 
-    List<Authority> selectByExampleWithRowbounds(AuthorityExample example, RowBounds rowBounds);
+  int insertSelective(Authority record);
 
-    List<Authority> selectByExample(AuthorityExample example);
+  List<Authority> selectByExampleWithRowbounds(AuthorityExample example, RowBounds rowBounds);
 
-    Authority selectByPrimaryKey(Integer id);
+  List<Authority> selectByExample(AuthorityExample example);
 
-    int updateByExampleSelective(@Param("record") Authority record, @Param("example") AuthorityExample example);
+  Authority selectByPrimaryKey(Integer id);
 
-    int updateByExample(@Param("record") Authority record, @Param("example") AuthorityExample example);
+  int updateByExampleSelective(@Param("record") Authority record,
+      @Param("example") AuthorityExample example);
 
-    int updateByPrimaryKeySelective(Authority record);
+  int updateByExample(@Param("record") Authority record,
+      @Param("example") AuthorityExample example);
 
-    int updateByPrimaryKey(Authority record);
+  int updateByPrimaryKeySelective(Authority record);
 
-    Long sumByExample(AuthorityExample example);
+  int updateByPrimaryKey(Authority record);
 
-    void batchInsert(@Param("items") List<Authority> items);
+  Long sumByExample(AuthorityExample example);
+
+  void batchInsert(@Param("items") List<Authority> items);
 }

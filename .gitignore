@@ -6,4 +6,4 @@ target/
 .idea
 *.iml
 logs
-.mvn/
+.mvn

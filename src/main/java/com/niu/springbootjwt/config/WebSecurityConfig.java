@@ -1,7 +1,5 @@
 package com.niu.springbootjwt.config;
 
-import static org.springframework.http.HttpMethod.GET;
-import static org.springframework.http.HttpMethod.POST;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 import com.niu.springbootjwt.service.impl.JwtUserDetailsServiceImpl;
@@ -13,7 +11,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -90,17 +87,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .csrf()
         .disable()
 
+        // don't create session
+        .sessionManagement()
+        .sessionCreationPolicy(STATELESS).and()
+
+        // 异常处理器
         .exceptionHandling()
         .authenticationEntryPoint(unauthorizedHandler)
         .accessDeniedHandler(accessDeniedHandler)
         .and()
 
-        // don't create session
-        .sessionManagement()
-        .sessionCreationPolicy(STATELESS).and()
-
         // 配置请求的访问权限
         .authorizeRequests()
+        .antMatchers("/auth/**").permitAll()
+        .antMatchers("/protected/admin").hasRole("ADMIN")
         .anyRequest().authenticated();
 
     httpSecurity
@@ -113,21 +113,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .cacheControl();
   }
 
-  /**
-   * ignore certain requests.
-   */
-  @Override
-  public void configure(WebSecurity web) throws Exception {
-
-    // JwtAuthorizationTokenFilter will ignore the below paths
-    web
-        .ignoring()
-        .antMatchers(POST, "/**").and()
-
-        // allow anonymous resource requests
-        .ignoring()
-        .antMatchers(GET, "/", "/*.html", "/favicon.ico", "/**/*.html", "/**/*.css", "/**/*.js",
-            "/**").and();
-  }
+//  /**
+//   * ignore certain requests.
+//   */
+//  @Override
+//  public void configure(WebSecurity web) throws Exception {
+//
+//    // JwtAuthorizationTokenFilter will ignore the below paths
+//    web
+//        .ignoring()
+//        .antMatchers(POST, "/auth/**").and()
+//
+//        // allow anonymous resource requests
+//        .ignoring()
+//        .antMatchers(GET, "/", "/*.html", "/favicon.ico", "/**/*.html", "/**/*.css", "/**/*.js",
+//            "/**").and();
+//  }
 
 }

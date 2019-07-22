@@ -23,7 +23,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 /**
- * 过滤器
+ * 解析 token 的过滤器.
+ *
+ * 用于解析 token ，将用户所有的权限写入本次 Spring Security 的会话中
  *
  * Custom JWT based security filter
  *
@@ -89,10 +91,12 @@ public class JwtAuthorizationTokenFilter extends OncePerRequestFilter {
       // For simple validation it is completely sufficient to just check the token integrity. You don't have to call
       // the database compellingly. Again it's up to you ;)
       if (jwtTokenUtil.validateToken(authToken, userDetails)) {
+        // 生成通过认证
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
             userDetails, null, userDetails.getAuthorities());
         authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
         log.info("authorized user '{}', setting security context", username);
+        // 将权限写入本次会话
         SecurityContextHolder.getContext().setAuthentication(authentication);
       }
     }

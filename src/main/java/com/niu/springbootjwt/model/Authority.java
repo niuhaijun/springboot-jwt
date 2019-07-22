@@ -3,57 +3,64 @@ package com.niu.springbootjwt.model;
 import java.io.Serializable;
 
 public class Authority implements Serializable {
-    private Integer id;
 
-    private String name;
+  private static final long serialVersionUID = 1L;
+  private Integer id;
+  private String name;
+  private String updateSql;
 
-    private static final long serialVersionUID = 1L;
+  public Authority(Integer id, String name) {
 
-    private String updateSql;
+    this.id = id;
+    this.name = name;
+  }
 
-    public Authority(Integer id, String name) {
-        this.id = id;
-        this.name = name;
-    }
+  public Authority() {
 
-    public Authority() {
-        super();
-    }
+    super();
+  }
 
-    public Integer getId() {
-        return id;
-    }
+  public Integer getId() {
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    return id;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public void setId(Integer id) {
 
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
-    }
+    this.id = id;
+  }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", name=").append(name);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
-    }
+  public String getName() {
 
-    public String getUpdateSql() {
-        return this.updateSql;
-    }
+    return name;
+  }
 
-    public void setUpdateSql(String updateSql) {
-        this.updateSql = updateSql;
-    }
+  public void setName(String name) {
+
+    this.name = name == null ? null : name.trim();
+  }
+
+  @Override
+  public String toString() {
+
+    StringBuilder sb = new StringBuilder();
+    sb.append(getClass().getSimpleName());
+    sb.append(" [");
+    sb.append("Hash = ").append(hashCode());
+    sb.append(", id=").append(id);
+    sb.append(", name=").append(name);
+    sb.append(", serialVersionUID=").append(serialVersionUID);
+    sb.append("]");
+    return sb.toString();
+  }
+
+  public String getUpdateSql() {
+
+    return this.updateSql;
+  }
+
+  public void setUpdateSql(String updateSql) {
+
+    this.updateSql = updateSql;
+  }
 }

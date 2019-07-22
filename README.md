@@ -13,5 +13,6 @@
 * 授权就是要确定用户能够访问资源
 
 # 参考链接
-* [SpringBoot-Security-JWT demo](https://github.com/niuhaijun/jwt-spring-security-demo)
+* [SpringBoot-Security-JWT demo1](https://github.com/niuhaijun/jwt-spring-security-demo)
+* [SpringBoot-Security-JWT demo2](https://github.com/niuhaijun/springsecurity)
 * [Spring Security Architecture](https://spring.io/guides/topicals/spring-security-architecture)

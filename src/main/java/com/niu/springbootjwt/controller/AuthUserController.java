@@ -1,5 +1,6 @@
 package com.niu.springbootjwt.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.niu.springbootjwt.common.Result;
 import com.niu.springbootjwt.security.JwtAuthenticationException;
 import com.niu.springbootjwt.security.JwtAuthenticationRequest;
@@ -8,8 +9,8 @@ import com.niu.springbootjwt.security.JwtTokenUtil;
 import com.niu.springbootjwt.security.JwtUser;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import javax.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,6 +22,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,8 +30,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("authentication")
-public class AuthenticationRestController {
+@RequestMapping("auth")
+@Slf4j
+public class AuthUserController {
 
   @Autowired
   private AuthenticationManager authenticationManager;
@@ -54,6 +57,15 @@ public class AuthenticationRestController {
 
     String username = authenticationRequest.getUsername();
     String password = authenticationRequest.getPassword();
+
+    if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
+
+      Result<Map<String, String>> result = new Result<>();
+      result.setCode(400);
+      result.setMessage("username或password参数缺失或存在空值");
+      result.setData(null);
+      return result;
+    }
 
     authenticate(username, password);
 
@@ -89,27 +101,28 @@ public class AuthenticationRestController {
   }
 
   /**
-   * Authenticates the user.
+   * authenticate the user. 认证用户
    *
    * If something is wrong, an {@link JwtAuthenticationException} will be thrown
    */
   private void authenticate(String username, String password) {
 
-    Objects.requireNonNull(username);
-    Objects.requireNonNull(password);
-
     try {
       Authentication authentication = new UsernamePasswordAuthenticationToken(username, password);
-      authenticationManager.authenticate(authentication);
+      Authentication obj = authenticationManager.authenticate(authentication);
+      log.info(new ObjectMapper().writeValueAsString(obj));
     }
     catch (DisabledException e) {
+      log.info("User is disabled! {}", e.getMessage());
       throw new JwtAuthenticationException("User is disabled!", e);
     }
     catch (BadCredentialsException e) {
+      log.info("Bad credentials! {}", e.getMessage());
       throw new JwtAuthenticationException("Bad credentials!", e);
     }
     catch (Exception e) {
-      throw new JwtAuthenticationException("Bad credentials!", e);
+      log.info("Unknown error! {}", e.getMessage());
+      throw new JwtAuthenticationException("Unknown error!", e);
     }
   }
 }

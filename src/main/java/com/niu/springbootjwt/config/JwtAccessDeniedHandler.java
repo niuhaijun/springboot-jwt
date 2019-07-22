@@ -29,7 +29,7 @@ public class JwtAccessDeniedHandler implements AccessDeniedHandler {
     httpServletResponse.setContentType("application/json");
 
     httpServletResponse.getWriter()
-        .println("{\"code\":403,\"message\":\"小弟弟，你没有权限访问呀！\",\"data\":\"\"}");
+        .println("{\"code\":403,\"message\":\"你没有权限访问！\",\"data\":\"\"}");
     httpServletResponse.getWriter().flush();
   }
 }

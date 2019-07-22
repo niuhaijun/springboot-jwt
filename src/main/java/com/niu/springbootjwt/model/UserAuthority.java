@@ -3,69 +3,77 @@ package com.niu.springbootjwt.model;
 import java.io.Serializable;
 
 public class UserAuthority implements Serializable {
-    private Integer id;
 
-    private Integer userId;
+  private static final long serialVersionUID = 1L;
+  private Integer id;
+  private Integer userId;
+  private Integer authorityId;
+  private String updateSql;
 
-    private Integer authorityId;
+  public UserAuthority(Integer id, Integer userId, Integer authorityId) {
 
-    private static final long serialVersionUID = 1L;
+    this.id = id;
+    this.userId = userId;
+    this.authorityId = authorityId;
+  }
 
-    private String updateSql;
+  public UserAuthority() {
 
-    public UserAuthority(Integer id, Integer userId, Integer authorityId) {
-        this.id = id;
-        this.userId = userId;
-        this.authorityId = authorityId;
-    }
+    super();
+  }
 
-    public UserAuthority() {
-        super();
-    }
+  public Integer getId() {
 
-    public Integer getId() {
-        return id;
-    }
+    return id;
+  }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+  public void setId(Integer id) {
 
-    public Integer getUserId() {
-        return userId;
-    }
+    this.id = id;
+  }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
+  public Integer getUserId() {
 
-    public Integer getAuthorityId() {
-        return authorityId;
-    }
+    return userId;
+  }
 
-    public void setAuthorityId(Integer authorityId) {
-        this.authorityId = authorityId;
-    }
+  public void setUserId(Integer userId) {
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", userId=").append(userId);
-        sb.append(", authorityId=").append(authorityId);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
-    }
+    this.userId = userId;
+  }
 
-    public String getUpdateSql() {
-        return this.updateSql;
-    }
+  public Integer getAuthorityId() {
 
-    public void setUpdateSql(String updateSql) {
-        this.updateSql = updateSql;
-    }
+    return authorityId;
+  }
+
+  public void setAuthorityId(Integer authorityId) {
+
+    this.authorityId = authorityId;
+  }
+
+  @Override
+  public String toString() {
+
+    StringBuilder sb = new StringBuilder();
+    sb.append(getClass().getSimpleName());
+    sb.append(" [");
+    sb.append("Hash = ").append(hashCode());
+    sb.append(", id=").append(id);
+    sb.append(", userId=").append(userId);
+    sb.append(", authorityId=").append(authorityId);
+    sb.append(", serialVersionUID=").append(serialVersionUID);
+    sb.append("]");
+    return sb.toString();
+  }
+
+  public String getUpdateSql() {
+
+    return this.updateSql;
+  }
+
+  public void setUpdateSql(String updateSql) {
+
+    this.updateSql = updateSql;
+  }
 }

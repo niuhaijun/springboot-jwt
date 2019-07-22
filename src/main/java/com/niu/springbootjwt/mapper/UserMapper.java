@@ -7,31 +7,32 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 
 public interface UserMapper {
-    int countByExample(UserExample example);
 
-    int deleteByExample(UserExample example);
+  int countByExample(UserExample example);
 
-    int deleteByPrimaryKey(Integer id);
+  int deleteByExample(UserExample example);
 
-    int insert(User record);
+  int deleteByPrimaryKey(Integer id);
 
-    int insertSelective(User record);
+  int insert(User record);
 
-    List<User> selectByExampleWithRowbounds(UserExample example, RowBounds rowBounds);
+  int insertSelective(User record);
 
-    List<User> selectByExample(UserExample example);
+  List<User> selectByExampleWithRowbounds(UserExample example, RowBounds rowBounds);
 
-    User selectByPrimaryKey(Integer id);
+  List<User> selectByExample(UserExample example);
 
-    int updateByExampleSelective(@Param("record") User record, @Param("example") UserExample example);
+  User selectByPrimaryKey(Integer id);
 
-    int updateByExample(@Param("record") User record, @Param("example") UserExample example);
+  int updateByExampleSelective(@Param("record") User record, @Param("example") UserExample example);
 
-    int updateByPrimaryKeySelective(User record);
+  int updateByExample(@Param("record") User record, @Param("example") UserExample example);
 
-    int updateByPrimaryKey(User record);
+  int updateByPrimaryKeySelective(User record);
 
-    Long sumByExample(UserExample example);
+  int updateByPrimaryKey(User record);
 
-    void batchInsert(@Param("items") List<User> items);
+  Long sumByExample(UserExample example);
+
+  void batchInsert(@Param("items") List<User> items);
 }

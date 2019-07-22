@@ -1,14 +1,13 @@
 package com.niu.springbootjwt.controller;
 
 import com.niu.springbootjwt.common.Result;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("protected")
-public class MethodProtectedRestController {
+public class MethodProtectedController {
 
   /**
    * This is an example of some different kinds of granular restriction for endpoints.
@@ -18,7 +17,7 @@ public class MethodProtectedRestController {
    * So 'ADMIN' here is actually stored as 'ROLE_ADMIN' in database!
    **/
   @GetMapping("admin")
-  @PreAuthorize("hasRole('ADMIN')")
+//  @PreAuthorize("hasRole('ADMIN')")
   public Result<String> getProtectedGreeting() {
 
     Result<String> result = new Result<>("Greetings from admin protected method!");
