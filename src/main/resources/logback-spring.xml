@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+  <contextName>springboot-jwt</contextName>
+
+  <!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径 上线后需要改掉这个地址 -->
+  <property name="logging_Root" value="./logs" />
+
+  <!-- 控制台输出 -->
+  <appender name="DEFAULT-CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%d [%t] %-5p %c{2} [%X{__trace_id}/%X{mac}] - [%m]%n</pattern>
+    </encoder>
+  </appender>
+  <appender name="STDOUT-APPENDER" class="ch.qos.logback.core.ConsoleAppender">
+    <param name="target" value="System.out"/>
+    <encoder charset="UTF-8">
+      <pattern>%d [%t] %-5p %c{2} [%X{__trace_id}/%X{mac}] - [%m]%n</pattern>
+    </encoder>
+  </appender>
+  <appender name="STDERR-APPENDER" class="ch.qos.logback.core.ConsoleAppender">
+    <param name="target" value="System.err"/>
+    <encoder charset="UTF-8">
+      <pattern>%d [%t] %-5p %c{2} [%X{__trace_id}/%X{mac}] - [%m]%n</pattern>
+    </encoder>
+  </appender>
+
+  <!-- 按照每天生成日志文件 -->
+  <appender name="DEFAULT-APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>${logging_Root}/application-default.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <FileNamePattern>${logging_Root}/application-default.log.%d{yyyyMMdd}.%i</FileNamePattern>
+      <MaxHistory>20</MaxHistory>
+      <timeBasedFileNamingAndTriggeringPolicy
+        class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+        <maxFileSize>300MB</maxFileSize>
+      </timeBasedFileNamingAndTriggeringPolicy>
+    </rollingPolicy>
+    <encoder charset="UTF-8">
+      <pattern>%d [%t] %-5p %c{2} [%X{__trace_id}/%X{mac}] - [%m]%n</pattern>
+    </encoder>
+  </appender>
+  <appender name="ERROR-APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>${logging_Root}/application-error.log</file>
+    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+      <level>ERROR</level>
+    </filter>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>${logging_Root}/application-error.log.%d{yyyyMMdd}</fileNamePattern>
+      <MaxHistory>20</MaxHistory>
+    </rollingPolicy>
+    <encoder charset="UTF-8">
+      <pattern>%d [%t] %-5p %c{2} [%X{__trace_id}/%X{mac}] - [%m]%n</pattern>
+    </encoder>
+  </appender>
+  <appender name="PERF-APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>${logging_Root}/application-perf.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>${logging_Root}/application-perf.log.%d{yyyyMMdd}</fileNamePattern>
+      <MaxHistory>20</MaxHistory>
+    </rollingPolicy>
+    <encoder charset="UTF-8">
+      <pattern>%d [%t] %-5p %c{2} [%X{__trace_id}/%X{mac}] - [%m]%n</pattern>
+    </encoder>
+  </appender>
+  <appender name="CACHE-APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>${logging_Root}/application-cache.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>${logging_Root}/application-cache.log.%d{yyyyMMdd}</fileNamePattern>
+      <MaxHistory>20</MaxHistory>
+    </rollingPolicy>
+    <encoder charset="UTF-8">
+      <pattern>%d [%t] %-5p %c{2} [%X{__trace_id}/%X{mac}] - [%m]%n</pattern>
+    </encoder>
+  </appender>
+  <appender name="MQ-APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>${logging_Root}/application-msg.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>${logging_Root}/application-msg.log.%d{yyyyMMdd}</fileNamePattern>
+      <MaxHistory>20</MaxHistory>
+    </rollingPolicy>
+    <encoder charset="UTF-8">
+      <pattern>%d [%t] %-5p %c{2} [%X{__trace_id}/%X{mac}] - [%m]%n</pattern>
+    </encoder>
+  </appender>
+
+  <logger name="console" additivity="false">
+    <level value="INFO"/>
+    <appender-ref ref="DEFAULT-APPENDER"/>
+  </logger>
+  <logger name="perfLogUtils" additivity="false">
+    <level value="INFO"/>
+    <appender-ref ref="PERF-APPENDER"/>
+  </logger>
+  <logger name="STDOUT" additivity="false">
+    <level value="INFO"/>
+    <appender-ref ref="STDOUT-APPENDER"/>
+  </logger>
+  <logger name="STDERR" additivity="false">
+    <level value="ERROR"/>
+    <appender-ref ref="STDERR-APPENDER"/>
+  </logger>
+  <logger name="CACHE" additivity="false">
+    <level value="INFO"/>
+    <appender-ref ref="CACHE-APPENDER"/>
+  </logger>
+  <logger name="MQ" additivity="false">
+    <level value="INFO"/>
+    <appender-ref ref="MQ-APPENDER"/>
+  </logger>
+
+
+  <logger name="org.springframework" level="info"/>
+  <logger name="java.sql" level="info"/>
+  <logger name="org.apache.http" level="info"/>
+  <logger name="org.mybatis" level="info"/>
+  <logger name="org.apache.zookeeper" level="info"/>
+  <logger name="com.niu.springbootjwt.mapper" level="DEBUG"/>
+
+
+  <root>
+    <level value="INFO"/>
+    <appender-ref ref="STDOUT-APPENDER"/>
+    <!--    <appender-ref ref="DEFAULT-CONSOLE"/>-->
+    <appender-ref ref="DEFAULT-APPENDER"/>
+    <appender-ref ref="ERROR-APPENDER"/>
+  </root>
+</configuration>
