@@ -1,0 +1,1 @@
+2019-07-22 12:33:27,904 [http-nio-8080-exec-5] ERROR c.n.s.i.GlobalControllerAdvice [/] - [System error: An Authentication object was not found in the SecurityContext]

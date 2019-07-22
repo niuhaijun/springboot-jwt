@@ -99,12 +99,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .sessionManagement()
         .sessionCreationPolicy(STATELESS).and()
 
+        // 配置请求的访问权限
         .authorizeRequests()
-        // Un-secure H2 Database
-        .antMatchers("/h2-console/**/**").permitAll()
-        .antMatchers("/**").permitAll()
-        .anyRequest()
-        .authenticated();
+        .anyRequest().authenticated();
 
     httpSecurity
         .addFilterBefore(authenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
@@ -130,11 +127,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // allow anonymous resource requests
         .ignoring()
         .antMatchers(GET, "/", "/*.html", "/favicon.ico", "/**/*.html", "/**/*.css", "/**/*.js",
-            "/**").and()
-
-        // Un-secure H2 Database (for testing purposes, H2 console shouldn't be unprotected in production)
-        .ignoring()
-        .antMatchers("/h2-console/**/**");
+            "/**").and();
   }
 
 }

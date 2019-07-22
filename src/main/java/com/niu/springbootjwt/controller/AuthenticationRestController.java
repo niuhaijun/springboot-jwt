@@ -87,7 +87,6 @@ public class AuthenticationRestController {
     return ResponseEntity.badRequest().body(null);
   }
 
-
   /**
    * Authenticates the user.
    *

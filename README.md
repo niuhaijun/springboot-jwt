@@ -11,3 +11,7 @@
 # Authorization
 * or Access Control, what are you allowed to do?
 * 授权就是要确定用户能够访问资源
+
+# 参考链接
+* [SpringBoot-Security-JWT demo](https://github.com/niuhaijun/jwt-spring-security-demo)
+* [Spring Security Architecture](https://spring.io/guides/topicals/spring-security-architecture)

@@ -1,5 +1,6 @@
 package com.niu.springbootjwt.controller;
 
+import com.niu.springbootjwt.common.Result;
 import com.niu.springbootjwt.security.JwtTokenUtil;
 import com.niu.springbootjwt.security.JwtUser;
 import javax.servlet.http.HttpServletRequest;
@@ -27,12 +28,12 @@ public class UserRestController {
    * 获取已授权的用户
    */
   @GetMapping(value = "user")
-  public JwtUser getAuthenticatedUser(HttpServletRequest request) {
+  public Result<JwtUser> getAuthenticatedUser(HttpServletRequest request) {
 
     String token = request.getHeader(tokenHeader).substring(7);
     String username = jwtTokenUtil.getUsernameFromToken(token);
     JwtUser user = (JwtUser) userDetailsService.loadUserByUsername(username);
-    return user;
+    return new Result<>(user);
   }
 
 }
