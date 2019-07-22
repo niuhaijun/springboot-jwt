@@ -18,6 +18,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -98,13 +99,16 @@ public class AuthenticationRestController {
     Objects.requireNonNull(password);
 
     try {
-      authenticationManager
-          .authenticate(new UsernamePasswordAuthenticationToken(username, password));
+      Authentication authentication = new UsernamePasswordAuthenticationToken(username, password);
+      authenticationManager.authenticate(authentication);
     }
     catch (DisabledException e) {
       throw new JwtAuthenticationException("User is disabled!", e);
     }
     catch (BadCredentialsException e) {
+      throw new JwtAuthenticationException("Bad credentials!", e);
+    }
+    catch (Exception e) {
       throw new JwtAuthenticationException("Bad credentials!", e);
     }
   }

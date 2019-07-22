@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Slf4j
 @ControllerAdvice
+@ResponseBody
 public class GlobalControllerAdvice {
 
   /**
@@ -36,12 +37,11 @@ public class GlobalControllerAdvice {
   /**
    * 全局异常捕捉处理
    */
-  @ResponseBody
   @ExceptionHandler(value = Exception.class)
-  public Result<String> errorHandler(Exception e) {
+  public Result<String> handleException(Exception e) {
 
     log.info("System error: {}", e.getMessage());
-    Result<String> result = new Result<>(SERVICE_EXCEPTION, null, "服务端错误");
+    Result<String> result = new Result<>(SERVICE_EXCEPTION, null, e.getMessage());
 
     return result;
   }

@@ -3,6 +3,7 @@ package com.niu.springbootjwt.config;
 import static javax.servlet.http.HttpServletResponse.SC_UNAUTHORIZED;
 
 import java.io.IOException;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -26,11 +27,11 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
   /**
    * 未登录或无权限时触发的操作
-   * @throws IOException
    */
   @Override
   public void commence(HttpServletRequest request, HttpServletResponse response,
-      AuthenticationException authException) throws IOException {
+      AuthenticationException authException)
+      throws IOException, ServletException {
 
     log.info("无权访问，需要去认证");
 
