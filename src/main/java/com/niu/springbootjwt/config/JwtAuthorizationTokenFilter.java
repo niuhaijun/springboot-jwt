@@ -49,7 +49,7 @@ public class JwtAuthorizationTokenFilter extends OncePerRequestFilter {
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
       FilterChain chain) throws ServletException, IOException {
 
-    log.debug("processing authentication for '{}'", request.getRequestURL());
+    log.info("processing authentication for '{}'", request.getRequestURL());
 
     final String requestHeader = request.getHeader(this.tokenHeader);
 
@@ -61,19 +61,19 @@ public class JwtAuthorizationTokenFilter extends OncePerRequestFilter {
         username = jwtTokenUtil.getUsernameFromToken(authToken);
       }
       catch (IllegalArgumentException e) {
-        log.error("an error occurred during getting username from token", e);
+        log.info("an error occurred during getting username from token", e);
       }
       catch (ExpiredJwtException e) {
-        log.warn("the token is expired and not valid anymore", e);
+        log.info("the token is expired and not valid anymore", e);
       }
     }
     else {
-      log.warn("couldn't find bearer string, will ignore the header");
+      log.info("couldn't find bearer string, will ignore the header");
     }
 
     log.debug("checking authentication for user '{}'", username);
     if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-      log.debug("security context was null, so authorizing user");
+      log.info("security context was null, so authorizing user");
 
       // It is not compelling necessary to load the use details from the database. You could also store the information
       // in the token and read it from it. It's up to you ;)

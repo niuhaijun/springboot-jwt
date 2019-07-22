@@ -1,1 +1,8 @@
 2019-07-22 12:33:27,904 [http-nio-8080-exec-5] ERROR c.n.s.i.GlobalControllerAdvice [/] - [System error: An Authentication object was not found in the SecurityContext]
+2019-07-22 12:52:07,224 [http-nio-8080-exec-3] ERROR c.n.s.i.GlobalControllerAdvice [/] - [System error: 不允许访问]
+2019-07-22 12:52:21,680 [http-nio-8080-exec-4] ERROR c.n.s.i.GlobalControllerAdvice [/] - [System error: 不允许访问]
+2019-07-22 12:52:31,554 [http-nio-8080-exec-6] ERROR c.n.s.i.GlobalControllerAdvice [/] - [System error: 不允许访问]
+2019-07-22 12:53:42,922 [http-nio-8080-exec-5] ERROR c.n.s.i.GlobalControllerAdvice [/] - [System error: 不允许访问]
+2019-07-22 12:54:17,822 [http-nio-8080-exec-7] ERROR c.n.s.i.GlobalControllerAdvice [/] - [System error: 不允许访问]
+2019-07-22 12:54:47,378 [http-nio-8080-exec-8] ERROR c.n.s.i.GlobalControllerAdvice [/] - [System error: 不允许访问]
+2019-07-22 12:57:32,255 [http-nio-8080-exec-8] ERROR c.n.s.i.GlobalControllerAdvice [/] - [System error: An Authentication object was not found in the SecurityContext]

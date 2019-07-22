@@ -25,7 +25,7 @@ public class GlobalControllerAdvice {
   @ExceptionHandler({JwtAuthenticationException.class})
   public Result<String> handleAuthenticationException(JwtAuthenticationException e) {
 
-    log.error("System error: {}", e.getMessage());
+    log.info("System error: {}", e.getMessage());
 
     Result<String> result = new Result<>(UNAUTHORIZED.value(), null,
         UNAUTHORIZED.getReasonPhrase());
@@ -40,7 +40,7 @@ public class GlobalControllerAdvice {
   @ExceptionHandler(value = Exception.class)
   public Result<String> errorHandler(Exception e) {
 
-    log.error("System error: {}", e.getMessage());
+    log.info("System error: {}", e.getMessage());
     Result<String> result = new Result<>(SERVICE_EXCEPTION, null, "服务端错误");
 
     return result;
