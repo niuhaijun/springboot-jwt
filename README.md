@@ -9,10 +9,17 @@
 * who are you?
 * 认证就是要确保当前用户是系统中的有效用户
 # Authorization
-* or Access Control, what are you allowed to do?
+* Access Control, what are you allowed to do?
 * 授权就是要确定用户能够访问资源
+
 
 # 参考链接
 * [SpringBoot-Security-JWT demo1](https://github.com/niuhaijun/jwt-spring-security-demo)
 * [SpringBoot-Security-JWT demo2](https://github.com/niuhaijun/springsecurity)
 * [Spring Security Architecture](https://spring.io/guides/topicals/spring-security-architecture)
+
+
+# 账号与密码
+* admin/password
+* user/password
+* disabled/password
